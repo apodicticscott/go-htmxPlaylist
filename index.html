@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+  <title>Playlist</title>
+  <script src="https://unpkg.com/htmx.org@1.9.2" integrity="sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h" crossorigin="anonymous"></script>
+</head>
+<body class="container">
+
+    <div class="row mt-4 g-4">
+        <div class="col-8">
+            <h1 class="mb-4">Liked Songs</h1>
+        
+            <ul class="list-group fs-5 me-5" id="song-list">
+                {{ range .Songs }}
+                {{ block "song-list-element" .}}
+                    <li class="list-group-item bg-primary text-white">{{ .Name }} - {{ .Artist }}</li>
+                {{ end }}
+                {{ end }}
+            </ul>
+        </div>
+
+        <div class="col-4">
+            <h1 class="mb-4">Add Song</h1>
+
+            <form hx-post="/add-song/" hx-target="#song-list" hx-swap="beforeend" hx-indicator="#spinner">
+                <div class="mb-2">
+                    <label for="song-name">Song Name</label>
+                    <input type="text" name="name" id="song-name" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label for="film-artist">Artist</label>
+                    <input type="text" name="artist" id="film-artist" class="form-control" />
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <span class="spinner-border spinner-border-sm htmx-indicator" id="spinner" role="status" aria-hidden="true"></span>
+                    Submit
+                </button>
+            </form>
+        </div>
+
+    </div></body>
+</html>
